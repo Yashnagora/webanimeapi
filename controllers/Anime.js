@@ -1,5 +1,6 @@
 const animeschema = require("../models/Anime")
 
+// get all anime data
 
 const getAllAnimes = async (req, res) => {
   const page = Number(req.query.page) || 1;
@@ -19,6 +20,9 @@ const getAllAnimes = async (req, res) => {
       currentPage: page
   });
 };
+
+// get anime id
+
 const getAnimeid = async(req, res)=>{
     const animeId = req.params.id;
     const anime = await animeschema.findOne({ mal_id: parseInt(animeId) });
@@ -33,6 +37,9 @@ const getAllAnimesTesting = async(req, res)=>{
     const data = await animeschema.find(req.query);
     res.status(200).json({data})
 }
+
+
+// add animes
 
 const Addanimes = async(req, res)=>{
   try {
