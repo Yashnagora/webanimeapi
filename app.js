@@ -13,7 +13,7 @@ const start = async()=>{
     try {
         await connectDB(process.env.MONGODB_URL);
         app.listen(PORT,()=>{
-            console.log(`anime api is working http://localhost:${PORT}`)
+            console.log(`anime api is working`)
         })
     } catch (error) {
         console.log(error);

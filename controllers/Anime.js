@@ -43,7 +43,6 @@ const getAllAnimesTesting = async(req, res)=>{
 
 const Addanimes = async(req, res)=>{
   try {
-    console.log('Request Body:', req.body);
     if (req.method.toUpperCase() === 'POST') {
       if (!req.body || !Array.isArray(req.body)) {
         return res.status(400).json({ error: 'Invalid request body' });
@@ -61,7 +60,7 @@ const Addanimes = async(req, res)=>{
           rating: req.body[i].rating,
           score: req.body[i].score,
           synopsis: req.body[i].synopsis,
-          aired: req.body[i].aire,
+          aired: req.body[i].aired,
           genres: req.body[i].genres,
           studios: req.body[i].studios,
           broadcast: req.body[i].broadcast,
