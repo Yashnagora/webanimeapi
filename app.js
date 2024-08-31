@@ -11,7 +11,7 @@ app.use("/anime" , anime_routes)
 
 const start = async()=>{
     try {
-        await connectDB(process.env.MONGODB_URL);
+        await connectDB(process.env.MONGO_URI);
         app.listen(PORT,()=>{
             console.log(`anime api is working`)
         })

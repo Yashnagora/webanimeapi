@@ -1,3 +1,5 @@
+
+
 const mongoose = require("mongoose")
 require("dotenv").config();
 
@@ -6,11 +8,13 @@ const connectDB = (uri)=>{
     try {
         return mongoose.connect(uri, {
             useNewUrlParser: true,
-            useUnifiedTopology: true
+            useUnifiedTopology: true,
+            serverSelectionTimeoutMS: 10000, // Server selection timeout
         });
+        // console.log("MongoDB connected successfully");
     } catch (error) {
-        console.error("MongoDB Connection Error:", error);
-        throw error;
+        console.error("MongoDB connection failed:", error);
+        process.exit(1); // Exit the process if MongoDB connection fails
     }
 };
 
