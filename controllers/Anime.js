@@ -85,7 +85,7 @@ const scrapeAnimes = async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
@@ -248,55 +248,48 @@ async function selectNextServer(page) {
 // Navigation function to skip ads
 async function handleNavigationSteps(page) {
   // Step 1: Skip Ad and Enjoy button click
-  if (await page.$('button#skip-ad-btn')) {
+  if (await page.$('button#skip-ad-btn-2')) {
     console.log("Clicking 'Skip Ad and Enjoy' button...");
-    await page.click('button#skip-ad-btn');
+    await page.click('button#skip-ad-btn-2');
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
    }
 
    console.log("Wait for next page");
-   await page.waitForNavigation({ waitUntil: 'networkidle2' });
    
   // Step 2: Click 'Click here to continue'
-  if (await page.$('button#tp98')) {
-    console.log("Waiting 15 seconds for 'Continue' button...");
-    await new Promise(resolve => setTimeout(resolve, 23000)); // Wait for 15 seconds
-    await page.click('button#tp98');
+  if (await page.$('button#anchor-btn')) {
+    console.log("Waiting 3 seconds for 'im not a robot' button...");
+    await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for 15 seconds
+    await page.click('button#anchor-btn');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    await page.click('button#anchor-btn');
+    console.log("button#anchor-btn");
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
+    console.log("Wait for Navigation");
   }
 
   // Step 3: Wait 15 seconds and click 'Continue' button
-  if (await page.$('button#btn6')) {
+  if (await page.$('button#anchor-btn')) {
     console.log("Waiting 15 seconds for 'Continue' button...");
     await new Promise(resolve => setTimeout(resolve, 23000)); // Wait for 15 seconds
-    await page.click('button#btn6');
+    await page.click('button#anchor-btn');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    await page.click('button#anchor-btn');
     await page.waitForNavigation({ waitUntil: 'networkidle2' });
   }
 
   // Step 4: Wait another 15 seconds for next 'Continue' button
-  if (await page.$('a#btn6')) {
+  if (await page.$('button#anchor-btn')) {
     console.log("Waiting another 15 seconds for 'Continue' button...");
-    await new Promise(resolve => setTimeout(resolve, 24000));
-    await page.click('a#btn6');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    await page.click('button#anchor-btn');
+    await new Promise(resolve => setTimeout(resolve, 20000));
+    await page.click('button#anchor-btn');
     console.log("clicked to 'Continue' button...");
-    // await page.waitForNavigation({ waitUntil: 'networkidle2' });
+    await page.waitForNavigation({ waitUntil: 'networkidle2' });
     console.log("waitForNavigation");
   }
   console.log("step 4 comp");
-  // Step 5: Final 3 seconds wait for 'Get Link' button
-  await page.waitForSelector('a.get-link', { timeout: 5000 }); // Wait up to 10 seconds
-const getLinkButton = await page.$('a.get-link');
-if (getLinkButton) {
-  console.log("Waiting 3 seconds for 'Get Link' button...");
-  await new Promise(resolve => setTimeout(resolve, 3000));
-  await getLinkButton.click();
-  console.log("clicked 'Get Link' button...");
-  await page.waitForNavigation({ waitUntil: 'networkidle2' });
-  console.log("waitForNavigation complete after clicking 'Get Link'");
-} else {
-  console.log("'Get Link' button not found.");
-}
-  console.log("step 5 comp");
 
   if (await page.$('div#mul-0')) {
     console.log("Waiting 3 seconds for 'Get Link' button...");
