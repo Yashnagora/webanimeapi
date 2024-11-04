@@ -86,7 +86,8 @@ const scrapeAnimes = async (req, res) => {
   try {
     const browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/path/to/chrome',
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(80000);
