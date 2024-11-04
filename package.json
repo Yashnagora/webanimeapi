@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "postinstall": "puppeteer install"
+    "postinstall": "puppeteer install",
+    "build": "echo 'No build step required'"
   },
   "author": "",
   "license": "ISC",
