@@ -87,10 +87,10 @@ const scrapeAnimes = async (req, res) => {
   try {
     const browser = await puppeteer.launch({
       args: chrome.args,
-      executablePath: await chrome.executablePath,  // chrome-aws-lambda path
+      executablePath: await chrome.executablePath,
       headless: chrome.headless,
     });
-
+    
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(80000);
     await page.setViewport({ width: 375, height: 667, isMobile: true });
