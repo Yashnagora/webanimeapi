@@ -6,8 +6,9 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "postinstall": "puppeteer install",
+    "postinstall": "apt-get update && apt-get install -y google-chrome-stable",
     "build": "echo 'No build step required'"
+
   },
   "author": "",
   "license": "ISC",

@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+# build.sh
+#!/bin/bash
 
 echo "Installing dependencies..."
 npm install
