@@ -1,5 +1,6 @@
 const Anime = require("../models/Anime")
-const puppeteer = require('puppeteer');
+const chrome = require('chrome-aws-lambda');
+const puppeteer = require('puppeteer-core');
 
 // get all anime data
 
@@ -85,13 +86,13 @@ const scrapeAnimes = async (req, res) => {
 
   try {
     const browser = await puppeteer.launch({
-      headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  executablePath: '/usr/bin/google-chrome',
+      args: chrome.args,
+      executablePath: await chrome.executablePath,  // chrome-aws-lambda path
+      headless: chrome.headless,
     });
+
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(80000);
-
     await page.setViewport({ width: 375, height: 667, isMobile: true });
     await page.setUserAgent(
       'Mozilla/5.0 (iPhone; CPU iPhone OS 10_3 like Mac OS X) AppleWebKit/602.1.50 (KHTML, like Gecko) Version/10.0 Mobile/14E5239e Safari/602.1'
@@ -99,24 +100,15 @@ const scrapeAnimes = async (req, res) => {
 
     await page.goto(url, { waitUntil: 'networkidle2' });
 
-    // Handle Navigation Steps and Scraping Process here...
-
     await handleNavigationSteps(page);
 
-    // Check if we are back to the desired URL
     const currentUrl = await page.url();
     console.log('Final URL after all navigation steps:', currentUrl);
 
     if (currentUrl === url) {
       console.log('Successfully navigated to the desired URL. Now scraping episode details...');
-
-      // Start scraping episodes
-
       const episodes = await scrapeEpisodes(page, server);
-
-      // Close the browser
       await browser.close();
-
       res.status(200).json({ message: 'Episode details successfully scraped', episodes });
     } else {
       console.log('Navigation completed but final URL does not match. No scraping performed.');
@@ -127,7 +119,7 @@ const scrapeAnimes = async (req, res) => {
     console.error('Error during navigation:', error);
     res.status(500).json({ error: 'Navigation failed', details: error.message });
   }
-}
+};
 
 // Function to scrape episodes and handle server selection
 async function scrapeEpisodes(page, server) {
