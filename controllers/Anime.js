@@ -1,5 +1,6 @@
 const Anime = require("../models/Anime")
 const puppeteer = require('puppeteer');
+require("dotenv").config();
 
 // get all anime data
 
@@ -87,6 +88,10 @@ const scrapeAnimes = async (req, res) => {
     const browser = await puppeteer.launch({
       headless: true,
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
+      executablePath:
+      process.env.NODE_ENV === "production"
+        ? process.env.PUPPETEER_EXECUTABLE_PATH
+        : puppeteer.executablePath(),
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(80000);
