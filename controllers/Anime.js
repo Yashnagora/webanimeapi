@@ -103,7 +103,7 @@ const scrapeAnimes = async (req, res) => {
     '--single-process',
     '--disable-gpu',
   ],
-      executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath(),
+      // executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath(),
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(40000);
