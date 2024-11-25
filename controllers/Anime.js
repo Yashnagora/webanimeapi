@@ -1,5 +1,5 @@
 const Anime = require("../models/Anime")
-const puppeteer = require('puppeteer-core');
+const puppeteer = require('puppeteer');
 const chromium = require('@sparticuz/chromium');
 
 require("dotenv").config();
