@@ -93,7 +93,8 @@ const scrapeAnimes = async (req, res) => {
 
     const browser = await puppeteer.launch({
       // headless: chromium.headless,
-      headless: true,
+      headless: "new",
+  executablePath: puppeteer.executablePath(),
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',

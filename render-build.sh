@@ -6,4 +6,5 @@ apt-get install -y wget ca-certificates fonts-liberation libappindicator3-1 \
     libxrandr2 xdg-utils libgbm-dev libxshmfence1
 
 # Install Node.js dependencies
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
 npm install
