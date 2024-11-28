@@ -1,5 +1,5 @@
 const Anime = require("../models/Anime")
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
 
 require("dotenv").config();
@@ -92,9 +92,8 @@ const scrapeAnimes = async (req, res) => {
     const isLocal = !!process.env.CHROME_EXECUTABLE_PATH;
 
     const browser = await puppeteer.launch({
-      // headless: chromium.headless,
-      headless: "new",
-  executablePath: puppeteer.executablePath(),
+      headless: chromium.headless,
+      // headless: true,
   args: [
     '--no-sandbox',
     '--disable-setuid-sandbox',
@@ -104,7 +103,7 @@ const scrapeAnimes = async (req, res) => {
     '--single-process',
     '--disable-gpu',
   ],
-      // executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath(),
+      executablePath: process.env.CHROME_EXECUTABLE_PATH || await chromium.executablePath(),
     });
     const page = await browser.newPage();
     await page.setDefaultNavigationTimeout(40000);
