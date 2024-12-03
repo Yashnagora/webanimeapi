@@ -1,6 +1,7 @@
 const Anime = require("../models/Anime")
 const puppeteer = require('puppeteer-core');
 const chromium = require('@sparticuz/chromium');
+console.log(chromium.executablePath);
 
 require("dotenv").config();
 
@@ -83,6 +84,7 @@ chromium.setHeadlessMode = true;
 chromium.setGraphicsMode = false;
 
 const scrapeAnimes = async (req, res) => {
+  console.log('Chromium Path:', chromium.executablePath);
   const { id, url, server } = req.body;
   if (!id || !url) {
     return res.status(400).json({ error: 'ID or URL not provided' });

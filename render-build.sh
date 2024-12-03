@@ -7,6 +7,14 @@ apt-get update && apt-get install -y wget ca-certificates \
   xdg-utils libgbm-dev libxshmfence1
 
 # Install Node.js dependencies
+npm install
+
+# Set Puppeteer environment variables
 export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 export PUPPETEER_EXECUTABLE_PATH=$(node -e "console.log(require('@sparticuz/chromium').executablePath)")
-npm install
+
+# Validate Chromium installation
+if [ ! -f "$PUPPETEER_EXECUTABLE_PATH" ]; then
+  echo "Chromium executable not found at $PUPPETEER_EXECUTABLE_PATH"
+  exit 1
+fi
